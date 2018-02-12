@@ -1,4 +1,4 @@
 1 Clone the project
-2 run npm install
-3 run ionic build ios
-4 run ionic plugin add cordova-plugin-camera
+2 Run npm install
+3 Run ionic build ios
+4 Run ionic plugin add cordova-plugin-camera
