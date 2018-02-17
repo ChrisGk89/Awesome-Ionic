@@ -1,11 +1,14 @@
 import { Component } from '@angular/core';
 import { NgForm } from "@angular/forms";
 import { ModalController, LoadingController, ToastController } from "ionic-angular";
-import { Geolocation, Camera, File, Entry, FileError } from "ionic-native";
+import { Geolocation } from '@ionic-native/geolocation';
+import { Camera } from '@ionic-native/camera';
+import { File, Entry, FileError } from '@ionic-native/file';
 
 import { SetLocationPage } from "../set-location/set-location";
 import { Location } from "../../models/location";
 import { PlacesService } from "../../services/places";
+import {normalizeURL} from 'ionic-angular';
 
 declare var cordova: any;
 
@@ -15,8 +18,8 @@ declare var cordova: any;
 })
 export class AddPlacePage {
   location: Location = {
-    lat: 40.7624324,
-    lng: -73.9759827
+    lat: 47.4925,
+    lng: 19.0513
   };
   locationIsSet = false;
   imageUrl = '';
@@ -24,7 +27,10 @@ export class AddPlacePage {
   constructor(private modalCtrl: ModalController,
               private loadingCtrl: LoadingController,
               private toastCtrl: ToastController,
-              private placesService: PlacesService) {
+              private placesService: PlacesService,
+              private geolocation: Geolocation,
+              private camera: Camera,
+              private file: File) {
   }
 
   onSubmit(form: NgForm) {
@@ -32,8 +38,8 @@ export class AddPlacePage {
       .addPlace(form.value.title, form.value.description, this.location, this.imageUrl);
     form.reset();
     this.location = {
-      lat: 40.7624324,
-      lng: -73.9759827
+      lat: 47.4925,
+      lng: 19.0513
     };
     this.imageUrl = '';
     this.locationIsSet = false;
@@ -58,7 +64,7 @@ export class AddPlacePage {
       content: 'Getting your Location...'
     });
     loader.present();
-    Geolocation.getCurrentPosition()
+    this.geolocation.getCurrentPosition()
       .then(
         location => {
           loader.dismiss();
@@ -80,8 +86,8 @@ export class AddPlacePage {
   }
 
   onTakePhoto() {
-    Camera.getPicture({
-      encodingType: Camera.EncodingType.JPEG,
+    this.camera.getPicture({
+      encodingType: this.camera.EncodingType.JPEG,
       correctOrientation: true
     })
       .then(
@@ -89,11 +95,12 @@ export class AddPlacePage {
           const currentName = imageData.replace(/^.*[\\\/]/, '');
           const path = imageData.replace(/[^\/]*$/, '');
           const newFileName = new Date().getUTCMilliseconds() + '.jpg';
-          File.moveFile(path, currentName, cordova.file.dataDirectory, newFileName)
+          this.file.moveFile(path, currentName, cordova.file.dataDirectory, newFileName)
             .then(
               (data: Entry) => {
-                this.imageUrl = data.nativeURL;
-                Camera.cleanup();
+                this.imageUrl = normalizeURL(data.nativeURL);
+                  console.log('Place One: ' + this.imageUrl);
+                this.camera.cleanup();
                 // File.removeFile(path, currentName);
               }
             )
@@ -105,10 +112,10 @@ export class AddPlacePage {
                   duration: 2500
                 });
                 toast.present();
-                Camera.cleanup();
+                this.camera.cleanup();
               }
             );
-          this.imageUrl = imageData;
+          this.imageUrl = normalizeURL(this.imageUrl);
         }
       )
       .catch(

@@ -22,6 +22,12 @@
     </ion-row>
     <ion-row>
       <ion-col>
+        <ion-label no-padding>Date</ion-label>
+        <ion-datetime no-padding displayFormat="MMM DD, YYYY HH:mm" [(ngModel)]="place.dateTime"></ion-datetime>
+      </ion-col>
+    </ion-row>
+    <ion-row>
+      <ion-col>
         <sebm-google-map
           [latitude]="place.location.lat"
           [longitude]="place.location.lng"
@@ -37,7 +43,7 @@
         <button
           ion-button
           block
-          (click)="onLeave()">Leave</button>
+          (click)="onLeave()">Back</button>
       </ion-col>
       <ion-col>
         <button
@@ -45,6 +51,19 @@
           block
           color="danger"
           (click)="onDelete()">Delete</button>
+      </ion-col>
+      <ion-col>
+        <button
+                class="button"
+                ion-button
+                icon-right
+                block
+                padding-vertical
+                color="primary"
+                (click)="shareViaTwitter()">
+          Share this via Twitter
+          <ion-icon ios="logo-twitter" md="logo-twitter"></ion-icon>
+        </button>
       </ion-col>
     </ion-row>
   </ion-grid>
