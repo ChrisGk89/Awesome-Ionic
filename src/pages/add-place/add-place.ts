@@ -9,6 +9,8 @@ import { SetLocationPage } from "../set-location/set-location";
 import { Location } from "../../models/location";
 import { PlacesService } from "../../services/places";
 import {normalizeURL} from 'ionic-angular';
+import { AlertController } from 'ionic-angular';
+
 
 declare var cordova: any;
 
@@ -30,10 +32,23 @@ export class AddPlacePage {
               private placesService: PlacesService,
               private geolocation: Geolocation,
               private camera: Camera,
-              private file: File) {
+              private file: File,
+              private alertCtrl: AlertController) {
   }
 
-  onSubmit(form: NgForm) {
+
+
+    presentAlert() {
+        let alert = this.alertCtrl.create({
+            title: 'Your item was added',
+            subTitle: 'Memory just created',
+            buttons: ['OK']
+        });
+        alert.present();
+    }
+
+
+    onSubmit(form: NgForm) {
     this.placesService
       .addPlace(form.value.title, form.value.description, this.location, this.imageUrl);
     form.reset();
