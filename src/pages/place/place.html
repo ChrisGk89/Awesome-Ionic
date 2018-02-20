@@ -2,13 +2,25 @@
 <ion-header>
 
   <ion-navbar>
-    <ion-title>{{ place.title }}</ion-title>
+    <ion-buttons left>
+      <button ion-button block (click)="onLeave()">
+        <ion-icon class="customIcon" name="arrow-back"></ion-icon>
+      </button>
+    </ion-buttons>
+
+    <ion-buttons end>
+      <button ion-button block (click)="onDelete()">
+        <ion-icon>Delete</ion-icon>
+      </button>
+    </ion-buttons>
+
+    <ion-title text-center>{{ place.title }}</ion-title>
   </ion-navbar>
 
 </ion-header>
 
 
-<ion-content padding>
+<ion-content padding class="bg">
   <ion-grid>
     <ion-row>
       <ion-col text-center>
@@ -16,12 +28,17 @@
       </ion-col>
     </ion-row>
     <ion-row>
-      <ion-col>
+      <ion-col text-center>
+        <h2>{{ place.title }}</h2>
+      </ion-col>
+    </ion-row>
+    <ion-row>
+      <ion-col text-center>
         <p>{{ place.description }}</p>
       </ion-col>
     </ion-row>
     <ion-row>
-      <ion-col>
+      <ion-col text-left>
         <ion-label no-padding>Date</ion-label>
         <ion-datetime no-padding displayFormat="MMM DD, YYYY HH:mm" [(ngModel)]="place.dateTime"></ion-datetime>
       </ion-col>
@@ -39,19 +56,6 @@
       </ion-col>
     </ion-row>
     <ion-row>
-      <ion-col>
-        <button
-          ion-button
-          block
-          (click)="onLeave()">Back</button>
-      </ion-col>
-      <ion-col>
-        <button
-          ion-button
-          block
-          color="danger"
-          (click)="onDelete()">Delete</button>
-      </ion-col>
       <ion-col>
         <button
                 class="button"

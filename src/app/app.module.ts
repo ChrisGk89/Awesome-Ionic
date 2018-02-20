@@ -14,9 +14,11 @@ import { HomePage } from '../pages/home/home';
 import { AddPlacePage } from "../pages/add-place/add-place";
 import { PlacePage } from "../pages/place/place";
 import { SetLocationPage } from "../pages/set-location/set-location";
+import { WelcomePage } from "../pages/welcome/welcome";
 import { AgmCoreModule } from "angular2-google-maps/core";
 import { PlacesService } from "../services/places";
 import { TwitterService } from 'ng2-twitter';
+import {SocialSharing} from "@ionic-native/social-sharing";
 
 @NgModule({
   declarations: [
@@ -24,7 +26,8 @@ import { TwitterService } from 'ng2-twitter';
     HomePage,
     AddPlacePage,
     PlacePage,
-    SetLocationPage
+    SetLocationPage,
+      WelcomePage
   ],
   imports: [
     BrowserModule,
@@ -41,9 +44,11 @@ import { TwitterService } from 'ng2-twitter';
     HomePage,
     AddPlacePage,
     PlacePage,
-    SetLocationPage
+    SetLocationPage,
+      WelcomePage
   ],
   providers: [
+    SocialSharing,
     File,
     Camera,
     Geolocation,

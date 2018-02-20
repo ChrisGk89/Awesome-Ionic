@@ -7,9 +7,3 @@ You're downloading a finished Ionic  project. The following steps allow you to r
 2) Run "ionic serve" to build and serve the app (as shown in the course)
 
 If you plan to push this app to a simulator or real device: Don't forget to run "ionic platform add PLATFORM" (learn more in the course section about running apps on real devices)
-=======
-1 Clone the project
-2 Run npm install
-3 Run ionic build ios
-4 Run ionic plugin add cordova-plugin-camera
->>>>>>> origin/master
